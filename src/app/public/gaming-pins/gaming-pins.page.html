@@ -1,0 +1,106 @@
+<ion-header>
+    <ion-toolbar color="custom" mode="ios">
+      <ion-title class="price-style">Gaming Pins</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button 
+        text="back"
+        icon="arrow-dropleft">
+      </ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content class="content-height">
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+          <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+            <ion-card-title class="price-style">
+                <b>{{walletBal  | currency:"PHP":"symbol"}}</b>
+                <!-- <button (click)="viewPins('test')">BUTTON</button> -->
+            </ion-card-title>
+        </ion-card-header>
+    </ion-card>
+    <form [formGroup]="validationsForm" id="gameForm"> 
+        <ion-card class="ion-text-center ion-no-padding">
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked" color="custom">Product</ion-label>
+              <ionic-selectable
+                [items]="prodType"
+                itemValueField="name"
+                itemTextField="name"
+                [canSearch]="true"
+                (onChange)="getPins(product.value)"
+                formControlName="product" #product>
+              </ionic-selectable>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validationMessages.product">
+                    <div class="error-message" *ngIf="validationsForm.get('product').hasError(validation.type) && (validationsForm.get('product').dirty || validationsForm.get('product').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+          </ion-card-content>
+
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="stacked" color="custom">Pins</ion-label>
+                <ionic-selectable
+                    [items]="productCode"
+                    itemValueField="name"
+                    itemTextField="name"
+                    [canSearch]="true"
+                    formControlName="pins">
+                </ionic-selectable>
+              </ion-item>
+              <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validationMessages.pins">
+                      <div class="error-message" *ngIf="validationsForm.get('pins').hasError(validation.type) && (validationsForm.get('pins').dirty || validationsForm.get('pins').touched)">
+                      <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                      </div>
+                  </ng-container>
+              </div>
+            </ion-card-content>
+
+            <ion-card-content>
+              <ion-item class="auth-time-label">
+                <ion-label position="stacked" color="custom">Mobile</ion-label>
+                <ionic-selectable
+                      [items]="options"
+                      itemValueField="PREFIX"
+                      itemTextField="PREFIX"
+                      [canSearch]="true"
+                    formControlName="prefix" #prefix>
+                </ionic-selectable>
+                <ion-input slot="end" type="text" name="mobile" class="mobile-input" formControlName="mobile" (keypress)="mobileLength(mobile.value)" #mobile></ion-input>
+              </ion-item>
+                
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.prefix">
+                        <div class="error-message" *ngIf="validationsForm.get('prefix').hasError(validation.type) && (validationsForm.get('prefix').dirty || validationsForm.get('prefix').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.mobile">
+                        <div class="error-message" *ngIf="validationsForm.get('mobile').hasError(validation.type) && (validationsForm.get('mobile').dirty || validationsForm.get('mobile').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </form>
+
+    <ion-button 
+      class="ion-padding btn-height" 
+      form="gameForm" color="custom" 
+      [disabled]="!validationsForm.valid" 
+      type="submit" 
+      (click)='onSubmit(validationsForm.value)'>
+      Submit
+    </ion-button>
+
+</ion-content>

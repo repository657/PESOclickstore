@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="custom">
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>   
+
+<ion-content>
+    <ion-card class="ion-text-center ion-no-padding">
+        <ion-card-header>
+            <ion-card-subtitle>Available Wallet Balance</ion-card-subtitle>
+            <ion-card-title class="price-style">
+                    {{walletBal  | currency:"PHP":"symbol"}}
+            </ion-card-title>
+        </ion-card-header>
+    </ion-card>
+    <ion-grid class="ion-text-center">
+        <ion-row class="ion-no-padding">
+            <ion-col *ngFor="let p of appList" size="4" [ngClass]="!p.grey ? '' : 'disabled'" class="ion-no-padding" [routerLink]="!p.grey ? [p.url] : ['/home']">
+                <button>
+                    <img src={{p.icon}}> <br>
+                    <label class="labels">{{p.title}}</label>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
